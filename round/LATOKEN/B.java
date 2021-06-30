@@ -14,6 +14,27 @@ public class B {
         PrintWriter out = new PrintWriter(System.out, true);
         int cases = fr.nextInt();
         for(int c = 0; c < cases; c++) {
+            int size = fr.nextInt();
+            long total = 0;
+            int[] nums = new int[size+2];
+            for(int i = 1; i < size+1; i++) {
+                
+                int cur = fr.nextInt();
+                nums[i] = cur;
+                total += Math.abs(nums[i-1] - cur);
+                
+            }
+            
+            total += nums[nums.length-2];
+
+            for(int i = 1; i < nums.length -1; i++) {
+                if (nums[i] > nums[i-1] && nums[i] > nums[i+1]) {
+                    int sub = Math.min(nums[i] - nums[i-1], nums[i] - nums[i+1]);
+                    total -= sub;
+                    nums[i] -= sub;
+                }
+            }
+            out.write(total + "\n");
             
         }
         out.close();

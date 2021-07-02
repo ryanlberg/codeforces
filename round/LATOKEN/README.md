@@ -44,6 +44,7 @@ https://codeforces.com/contest/1534/problem/D
 <ins>Strategy</ins>: Query the first Node. Check to see if the majority of the nodes are even or odd jumps away from first. Query through the lesser of the two and add all edges that are 1 away.
 <br>
 * constructive?
+
 <br>
 <i>Time Complexity</i>: O(n^2)
 <br>

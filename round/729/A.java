@@ -3,10 +3,7 @@ import java.util.StringTokenizer;
 import java.io.InputStreamReader;
 import java.io.IOException;
 import java.io.PrintWriter;
-public class template {
-
-
-   
+public class A {
 
     public static void main(String[] args) {
         
@@ -14,6 +11,19 @@ public class template {
         PrintWriter out = new PrintWriter(System.out, true);
         int cases = fr.nextInt();
         for(int c = 0; c < cases; c++) {
+            int size = fr.nextInt();
+            int odds = 0;
+            for(int i = 0; i < 2*size; i++) {
+                int cur = fr.nextInt();
+                if (cur % 2 != 0) {
+                    odds++;
+                }
+            }
+            if(odds == size) {
+                out.write("Yes\n");
+            } else {
+                out.write("No\n");
+            }
             
         }
         out.close();
@@ -41,7 +51,7 @@ public class template {
 
         int nextInt() { return Integer.parseInt(next()); }
 
-        long nextLong() { return Long.parseLong(next()); }
+        long nextLong() { return Long.parseLong(next());}
 
         double nextDouble() { return Double.parseDouble(next()); }
 

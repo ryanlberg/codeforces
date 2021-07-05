@@ -20,28 +20,34 @@ public class B {
             long to_find = fr.nextLong();
             long mult = fr.nextLong();
             long add = fr.nextLong();
-            if(add == 1 || cando(to_find, mult, add)) {
-                out.write("Yes\n");
+            if(mult == 1) {
+                if((to_find-1) % add == 0) {
+                    out.write("Yes\n");
+                } else {
+                    out.write("No\n");
+                }
             } else {
-                out.write("No\n");
+                long start = 1;
+                boolean cando = false;
+                while(start <= to_find) {
+                    if(start % add == to_find % add) {
+                        cando = true;
+                        break;
+                    }
+                    start *= mult;
+                }
+                if(cando) {
+                    out.write("Yes\n");
+                } else {
+                    out.write("No\n");
+                }
             }
+
+
         }
         out.close();
     }
 
-    static boolean cando(long to_find, long mult, long add) {
-        if(to_find == 1) {
-            return true;
-        }
-        if(to_find > 0) {
-            if(to_find % mult == 0) {
-                return cando(to_find/mult, mult, add);
-            } else {
-                return cando(to_find - add, mult, add);
-            }
-        }
-        return false;
-    }
     static class FastReader {
 
         BufferedReader br;

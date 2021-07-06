@@ -13,9 +13,19 @@ https://codeforces.com/contest/1542/problem/A
 ## Problem B: Plus and Multiply.
 https://codeforces.com/contest/1542/problem/B
 
+<ins>Startegy</ins>: First check to see if N is divisible by A or B-1. If so return true, otherwise check if(a^K % b = n % b) for any k where a^k <= N.
+<br>
+<i>Runtime</i>:: O(k)
+<br>
+<i>Space Complexity</i>: O(1)
+
 
 ## Probelm C: Strange Function.
 https://codeforces.com/contest/1542/problem/C
 
-## Probelm D: Priority Queue.
-https://codeforces.com/contest/1542/problem/D
+<ins>Strategy</ins>: Accumulate (LCM of value) - (LCM of value - 1) * i for all i while lcm is < N.
+<br>
+<i>Runtime</i>: ~O(100)
+<br>
+<i>Space Complexity</i>: O(1)  
+

@@ -15,35 +15,31 @@ public class C {
         int cases = fr.nextInt();
         for(int c = 0; c < cases; c++) {
             long x = fr.nextLong();
-            long answer = 0;
-            long mod = 1_000_000_007;
-            if(x % 2 == 0) {
-                answer += (2*(x/2) % mod) % mod ;
-            } else {
-                answer += (2*((x/2)+1)%mod) %mod;
-            }
-
-            long sixes = (int)(x / 6);
-            long evens = (x/2) - sixes;
-            answer += (3*evens) % mod;
-           
-
-            if (sixes % 2 == 0) {
-                answer += (4*(sixes/2)) % mod;
-               
-                answer += (5*(sixes/2)) % mod;
+            long start = 1;
+            long total = 0;
+            long counter = 2;
+            while(start <= x) {
+                long cur = lcm(start, counter);
+                total += ((x/start) - (x/cur)) * counter;
                 
-            } else{
-                answer += (4*((sixes/2) + 1)) % mod;
-               
-                answer += (5*(sixes/2)) % mod;
-               
+                counter++;
+                start = cur;
             }
-            out.write(answer % mod+ "\n");
+            out.write((total) % 1_000_000_007 + "\n");
         }
         out.close();
     }
 
+    static long lcm(long A, long B) {
+        return (A * B) / gcd(A, B);
+    }
+
+    static long gcd(long A, long B) {
+        if(B == 0) {
+            return A;
+        }
+        return gcd(B, A % B);
+    }
     static class FastReader {
 
         BufferedReader br;

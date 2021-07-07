@@ -14,9 +14,22 @@ public class A {
         PrintWriter out = new PrintWriter(System.out, true);
         int cases = fr.nextInt();
         for(int c = 0; c < cases; c++) {
-            
+            long a = fr.nextLong();
+            long b = fr.nextLong();
+            if(a == b) {
+                out.write("0 0\n");
+            } else{
+                out.write(Math.abs(a - b) + " " + (Math.min(Math.max(a, b) % Math.abs(a-b), Math.abs(a-b) - Math.max(a, b) % Math.abs(a-b))) + "\n");
+            }
         }
         out.close();
+    }
+
+    static long gcd(long A, long B) {
+        if (B == 0) {
+            return A;
+        }
+        return gcd(B, A % B);
     }
 
     static class FastReader {

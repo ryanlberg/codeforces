@@ -14,6 +14,23 @@ public class B {
         PrintWriter out = new PrintWriter(System.out, true);
         int cases = fr.nextInt();
         for(int c = 0; c < cases; c++) {
+            int size = fr.nextInt();
+            long total = 0;
+            for(int i = 0; i < size; i++) {
+                total += fr.nextLong();
+            }
+            if(total % size == 0) {
+                out.write("0\n");
+            } else{
+                long up = total/size+1;
+                
+                if (up == 1) {
+                    out.write((size - total)*(size - (size - total)) + "\n");
+                } else {
+                    long num = ((up*size) - total);
+                    out.write(((size-num) * num) + "\n");
+                }
+            }
             
         }
         out.close();

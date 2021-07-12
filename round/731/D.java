@@ -20,13 +20,8 @@ public class D {
             
             for(int i = 1; i < size; i++) {
                 int cur = fr.nextInt();
-                int j = 1;
-                while(j < cur  &&  (j) < last) {
-                    j  <<= 1;
-                    j |= 1;
-                }
-                outnums[i] = cur ^ j;
-                last = j^last;
+                outnums[i] = last & ~cur; 
+                last = cur ^ outnums[i];
             }
             for(int i = 0; i < outnums.length; i++) {
                 out.write(outnums[i] + " ");

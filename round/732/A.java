@@ -14,8 +14,66 @@ public class A {
         PrintWriter out = new PrintWriter(System.out, true);
         int cases = fr.nextInt();
         for(int c = 0; c < cases; c++) {
-            
+            int size = fr.nextInt();
+            int[] a = new int[size];
+            int[] b = new int[size];
+            int sum = 0;
+            for(int i = 0; i < size; i++) {
+                int cur = fr.nextInt();
+                a[i] = cur;
+                sum += cur;
+            }
+            for(int i = 0;  i < size; i++) {
+                int cur = fr.nextInt();
+                b[i] = cur;
+                sum -= cur;
+            }
+            boolean can = true;
+            if(sum != 0) {
+                can = false;
+            }
+            if(!can) {
+                out.write(-1 + "\n");
+            } else {
+                ArrayList<ArrayList<Integer>> outnums = new ArrayList<>();
+                for(int i = 0; i < size; i++) {
+                    if(a[i] != b[i]) {
+                        while(a[i] < b[i]) {
+                            ArrayList<Integer> cur = new ArrayList<>();
+                            for(int j = i+1; j < size; j++) {
+                                if(a[j] > b[j]) {
+                                    a[i]++;
+                                    a[j]--;
+                                    cur.add(j+1);
+                                    cur.add(i+1);
+                                    break;
+                                }
+                            }
+                            outnums.add(cur);
+                        }
+                        while(a[i] > b[i]) {
+                            ArrayList<Integer> cur = new ArrayList<>();
+                            for(int j = i+1; j < size; j++) {
+                                if(a[j] < b[j]) {
+                                    a[i]--;
+                                    a[j]++;
+                                    cur.add(i+1);
+                                    cur.add(j+1);
+                                    break;
+                                }
+                            }
+                            outnums.add(cur);
+                        }
+                    }
+
+                }
+                out.write(outnums.size() + "\n");
+                for(ArrayList<Integer> x : outnums) {
+                    out.write(x.get(0) + " " + x.get(1) +  "\n");
+                }
+            }
         }
+
         out.close();
     }
 

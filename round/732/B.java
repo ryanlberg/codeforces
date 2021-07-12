@@ -14,7 +14,34 @@ public class B {
         PrintWriter out = new PrintWriter(System.out, true);
         int cases = fr.nextInt();
         for(int c = 0; c < cases; c++) {
-            
+            int words = fr.nextInt();
+            int len = fr.nextInt();
+            int[][] lets = new int[len][26];
+            for(int i = 0; i < words; i++) {
+                char[] cur = fr.next().toCharArray();
+                for(int j = 0; j < len; j++) {
+                    lets[j][cur[j] -'a']++;
+                }
+            }
+            for(int i = 0; i < words-1; i++) {
+                char[] cur = fr.next().toCharArray();
+                for(int j = 0; j < len; j++) {
+                    lets[j][cur[j] -'a']--;
+                }
+            }
+
+            StringBuilder outwrite = new StringBuilder();
+            for(int i = 0; i < lets.length; i++) {
+                for(int j = 0; j < 26; j++) {
+                    if(lets[i][j] > 0) {
+                        outwrite.append((char)(j + 'a'));
+                        break;
+                    }
+                }
+            }
+            out.write(outwrite.toString() + "\n");
+
+            System.out.flush();
         }
         out.close();
     }

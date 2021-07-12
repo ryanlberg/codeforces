@@ -14,9 +14,131 @@ public class C {
         PrintWriter out = new PrintWriter(System.out, true);
         int cases = fr.nextInt();
         for(int c = 0; c < cases; c++) {
+            int size = fr.nextInt();
+            Item[] nums = new Item[size];
+            for(int i = 0; i < size; i++) {
+                nums[i] = new Item(fr.nextInt());
+            }
+
+            Item[] sorted = strangesort(nums);
+            boolean cando = true;
+            for(int i = 1; i < sorted.length; i++) {
+                if(sorted[i].val == sorted[i-1].val && sorted[i].parity == 1 && sorted[i-1].parity == 1) {
+                    sorted[i].parity = 0;
+                    sorted[i-1].parity = 0;
+                }
+                if(sorted[i-1].parity == 1) {
+                    cando = false;
+                    break;
+                }
+            }
+
+            if(cando) {
+                out.write("Yes\n");
+            } else {
+                out.write("No\n");
+            }
             
         }
         out.close();
+    }
+
+    static Item[] strangesort(Item[] nums) {
+        if(nums.length == 1) {
+            return nums;
+        }
+        
+        Item[] left;
+        Item[] right;
+
+        if(nums.length % 2 == 0) {
+            left = new Item[nums.length/2];
+            right = new Item[nums.length/2];
+            for(int i = 0; i < nums.length/2; i++) {
+                left[i] = nums[i];
+                right[i] = nums[i + nums.length/2];
+            }
+        } else {
+            left = new Item[nums.length/2 + 1];
+            right = new Item[nums.length/2];
+            for(int i = 0; i < nums.length/2+1; i++) {
+                left[i] = nums[i];
+            }
+            for(int i = 0; i < nums.length/2; i++) {
+                right[i] = nums[i+nums.length/2+1];
+            }
+        }
+
+        Item[] a = strangesort(left);
+        Item[] b = strangesort(right);
+        
+        return merge(a, b);
+    }
+
+    static Item[] merge(Item[] one, Item[] two) {
+        Item[] ret = new Item[one.length + two.length];
+        int reti = 0;
+        int onei = 0;
+        int twoi = 0;
+        int swapped = 0;
+        while (onei < one.length && twoi < two.length) {
+            if(one[onei].val <= two[twoi].val) {
+                ret[reti] = one[onei];
+                if (swapped % 2 != 0) {
+                    ret[reti].parity ^= 1;
+                }
+                reti++;
+                onei++;
+            } else {
+                ret[reti] = two[twoi];
+                    if((twoi + one.length - reti) % 2 != 0) {
+                        ret[reti].parity ^= 1;
+                    }
+                reti++;
+                twoi++;
+                swapped++;
+            }
+        }
+
+        while(onei < one.length) {
+            ret[reti] = one[onei];
+                if (swapped % 2 != 0) {
+                    ret[reti].parity ^= 1;
+                }
+            reti++;
+            onei++;
+        }
+
+        while(twoi < two.length) {
+            ret[reti] = two[twoi];
+            reti++;
+            twoi++;
+        }
+
+
+
+        return ret;
+
+    }
+
+    static class Item implements Comparable<Item>{
+        int parity;
+        int val;
+
+        public Item(int val) {
+            this.parity = 0;
+            this.val = val;
+        }
+
+        public int compareTo(Item that) {
+            return Integer.compare(this.val, that.val);
+        }
+
+        public String toString() {
+            return val + ", " + parity;
+        }
+
+
     }
 
     static class FastReader {

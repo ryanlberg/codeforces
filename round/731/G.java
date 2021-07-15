@@ -90,25 +90,28 @@ public class G {
             fillscc();
 
             while(postorder.size() > 0) {
-                System.out.println("PostOrder: "  + postorder.pop());
-            }            
+                System.out.println("Postorder: " + postorder.pop() + " ");
+            }
         }
 
         public void fillscc() {
            
             for(int i = 1; i <= g.size; i++) {
-                dfs(i);
+                if(!marked[i]) {
+                    dfs(i);
+                }
             }
         }
 
         private void dfs(int start) {   
             marked[start] = true;
             for(int x: rev.g.get(start)) {
+                System.out.println("from: " + start + ", to: " + x);
                 if(!marked[x]) {
                     dfs(x);
-                    postorder.addElement(x);
                 }   
             }
+            postorder.add(start);
            
             
             

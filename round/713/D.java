@@ -15,35 +15,46 @@ public class D {
         int cases = fr.nextInt();
         for(int c = 0; c < cases; c++) {
             int size = fr.nextInt();
-            ArrayList<Long> nums = new ArrayList<Long>();
+            long [] nums = new long[size+2];
             long sum = 0;
+            HashMap<Long, ArrayList<Integer>> seen = new HashMap<>();
             for(int i = 0; i < size+2; i++) {
                 long cur = fr.nextLong();
-                nums.add(cur);
+                nums[i] = cur;
+                if(!seen.containsKey(cur)) {
+                    seen.put(cur, new ArrayList<Integer>());
+                }
+                seen.get(cur).add(i);
                 sum += cur;
             }
-            Collections.sort(nums);
-            HashSet<Integer> notneeded = new HashSet<>();
             boolean found = false;
-            for(int i = 0; i < nums.size()-1; i++) {
-                for(int j = i+1; j < nums.size(); j++) {
-                    long newsum = sum - nums.get(i) - nums.get(j);
-                    if(newsum == nums.get(i) || newsum == nums.get(j)){
-                        notneeded.add(i);
-                        notneeded.add(j);
+            HashSet<Integer> notneeded = new HashSet<>();
+            for(int i = 0; i < nums.length; i++) {
+                long val = sum - nums[i];
+                long total = val/2;
+                if(seen.containsKey(total)) {
+                    ArrayList<Integer> test = seen.get(val/2);
+                    if(val/2 == nums[i]) {
+                        if(test.size() >= 2) {
+                            found = true;
+                            notneeded.add(test.get(0));
+                            notneeded.add(test.get(1));
+                            break;
+                        }
+                    } else {
                         found = true;
+                        notneeded.add(i);
+                        notneeded.add(test.get(0));
                         break;
                     }
-                    
-                }
-                if(found) {
-                    break;
                 }
             }
+           
+
             if(found) {
-                for(int i = 0; i < nums.size(); i++) {
+                for(int i = 0; i < nums.length; i++) {
                     if(!notneeded.contains(i)) {
-                        out.write(nums.get(i) + " ");
+                        out.write(nums[i] + " ");
                     }
                 }
                 out.write("\n");

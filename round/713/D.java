@@ -32,9 +32,10 @@ public class D {
             for(int i = 0; i < nums.length; i++) {
                 long val = sum - nums[i];
                 long total = val/2;
-                if(seen.containsKey(total)) {
-                    ArrayList<Integer> test = seen.get(val/2);
-                    if(val/2 == nums[i]) {
+                //System.out.println(sum + ", " + " " + val + " " + total + " " + seen.containsKey(total));
+                if(val % 2 == 0 && seen.containsKey(total)) {
+                    ArrayList<Integer> test = seen.get(total);
+                    if(total == nums[i]) {
                         if(test.size() >= 2) {
                             found = true;
                             notneeded.add(test.get(0));

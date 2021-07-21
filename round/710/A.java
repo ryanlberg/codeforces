@@ -4,7 +4,7 @@ import java.io.InputStreamReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.*;
-public class template {
+public class A {
 
 
    
@@ -14,7 +14,9 @@ public class template {
         PrintWriter out = new PrintWriter(System.out, true);
         int cases = fr.nextInt();
         for(int c = 0; c < cases; c++) {
-            
+            long n = fr.nextLong();
+            long m = fr.nextLong();
+            long to_find = fr.nextLong();
         }
         out.close();
     }

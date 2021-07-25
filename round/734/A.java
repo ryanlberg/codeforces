@@ -14,7 +14,19 @@ public class A {
         PrintWriter out = new PrintWriter(System.out, true);
         int cases = fr.nextInt();
         for(int c = 0; c < cases; c++) {
+            int total = fr.nextInt();
+            int ones = total/3;
+            int twos = ones;
+            if(twos * 2 + ones == total) {
+                out.write(ones + " " + twos + "\n");
+            } else if((twos+1) * 2 + ones == total) {
+                out.write(ones + " " + (twos+1) + "\n");
+            } else {
+                out.write((ones + 1) + " " + twos + "\n");
+            }
             
+        
+
         }
         out.close();
     }

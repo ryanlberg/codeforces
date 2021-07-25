@@ -14,8 +14,19 @@ public class B {
         PrintWriter out = new PrintWriter(System.out, true);
         int cases = fr.nextInt();
         for(int c = 0; c < cases; c++) {
-            
+            int[] counts = new int[26];
+            char[] letters = fr.next().toCharArray();
+            int total = 0;
+            for(int i = 0; i < letters.length; i++) {
+                int cur = (int)letters[i] - 'a';
+                if(counts[cur] < 2) {
+                    total++;
+                    counts[cur]++;
+                }
+            }
+            out.write(total/2 + "\n");
         }
+
         out.close();
     }
 

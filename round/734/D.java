@@ -6,17 +6,29 @@ import java.io.PrintWriter;
 import java.util.*;
 public class D {
 
-
-   
-
     public static void main(String[] args) {
         FastReader fr = new FastReader();
         PrintWriter out = new PrintWriter(System.out, true);
         int cases = fr.nextInt();
         for(int c = 0; c < cases; c++) {
-            
+            int n = fr.nextInt();
+            int m = fr.nextInt();
+            int k = fr.nextInt();
+            if(solve(n, m, k) || (k == 0 && m % 2 == 1)) {
+                out.write("YES\n");
+            } else {
+                out.write("NO\n");
+            }
         }
         out.close();
+    }
+
+    static boolean solve(int n, int m, int k) {
+        int total = (n*m)/2;
+        if(n % 2 == k % 2 && m % 2 == (total-k) % 2) {
+            return true;
+        }
+        return false;
     }
 
     static class FastReader {

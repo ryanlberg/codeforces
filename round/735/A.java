@@ -14,9 +14,33 @@ public class A {
         PrintWriter out = new PrintWriter(System.out, true);
         int cases = fr.nextInt();
         for(int c = 0; c < cases; c++) {
-            
+            int size = fr.nextInt();
+            int[] nums = new int[size];
+            for(int i = 0; i < size; i++) {
+                nums[i] = fr.nextInt();
+            }
+
+            out.write(solve(nums) + "\n");
         }
         out.close();
+    }
+
+    static long solve(int[] nums) {
+        long ret = 0;
+        for(int i = 0; i < nums.length-1; i++) {
+            long max = nums[i];
+            long min = nums[i];
+            for(int j = i +1; j < nums.length; j++) {
+                max = Math.max(max, nums[j]);
+                min = Math.min(min, nums[j]);
+                if(max * min > ret) {
+                    ret = max * min;
+                } else{
+                    break;
+                }
+            }
+        }
+        return ret;
     }
 
     static class FastReader {

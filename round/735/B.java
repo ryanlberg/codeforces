@@ -14,10 +14,37 @@ public class B {
         PrintWriter out = new PrintWriter(System.out, true);
         int cases = fr.nextInt();
         for(int c = 0; c < cases; c++) {
-            
+            int size = fr.nextInt();
+            long k = fr.nextInt();
+            long[] nums = new long[size];
+            for(int i = 0; i < size; i++) {
+                nums[i] = fr.nextLong();
+            }
+
+            long answer = solve(nums, k);
+            out.write(answer + "\n");
         }
         out.close();
     }
+
+    static long solve(long[] nums, long k) {
+        long max = Integer.MIN_VALUE;
+        if(nums.length > 500) {
+            for(int i = nums.length-500; i < nums.length-1; i++) {
+                for(int j = i+1; j < nums.length; j++) {
+                    max = Math.max(max, ((long)(i+1)*(j+1)) - k * (nums[i] | nums[j]));
+                }
+            }
+        } else {
+            for(int i = 0; i < nums.length-1; i++) {
+                for(int j = i+1; j < nums.length; j++) {
+                    max = Math.max(max, ((long)(i+1)*(j+1)) - k * (nums[i] | nums[j]));
+                }
+            }
+        }
+        return max;
+    }    
+    
 
     static class FastReader {
 

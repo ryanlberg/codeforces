@@ -14,7 +14,8 @@ public class A {
         PrintWriter out = new PrintWriter(System.out, true);
         int cases = fr.nextInt();
         for(int c = 0; c < cases; c++) {
-            
+            int a = fr.nextInt();
+            out.write(2 + " " + (a-1) + "\n");
         }
         out.close();
     }

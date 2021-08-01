@@ -14,9 +14,37 @@ public class B {
         PrintWriter out = new PrintWriter(System.out, true);
         int cases = fr.nextInt();
         for(int c = 0; c < cases; c++) {
-            
+            int n = fr.nextInt();
+            char[][] board = new char[2][n];
+            board[0] = fr.next().toCharArray();
+            board[1] = fr.next().toCharArray();
+
+            out.write(solve(board, n) + "\n");
         }
         out.close();
+    }
+
+    static int solve(char[][] board, int n) {
+        int max = 0;
+        for(int i = 0; i < n; i++) {
+            if(board[1][i] == '1') {
+                if(isValid(i-1, n) && board[0][i-1] == '1') {
+                    max++;
+                    board[0][i-1] = 's';
+                } else if(board[0][i] == '0') {
+                    max++;
+                    board[0][i] = 's';
+                } else if(isValid(i+1, n)  && board[0][i+1] == '1') {
+                    max++;
+                    board[0][i+1] = 's';
+                }
+            }
+        }
+        return max;
+    }
+
+    static boolean isValid(int i, int n) {
+        return i >= 0 && i < n; 
     }
 
     static class FastReader {

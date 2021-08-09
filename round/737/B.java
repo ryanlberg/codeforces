@@ -7,16 +7,49 @@ import java.util.*;
 public class B {
 
 
-   
-
     public static void main(String[] args) {
         FastReader fr = new FastReader();
         PrintWriter out = new PrintWriter(System.out, true);
         int cases = fr.nextInt();
         for(int c = 0; c < cases; c++) {
+            int n = fr.nextInt();
+            int k = fr.nextInt();
+            int[] nums = new int[n];
+            for(int i = 0; i < n; i++) {
+                nums[i] = fr.nextInt();
+            }
+
+            int inversions = 0;
+            int sorted[] = sorted(nums);
+            HashMap<Integer, Integer> numlocs = new HashMap<>();
+            for(int i = 0; i < sorted.length; i++) {
+                numlocs.put(sorted[i], i);
+            }
+
+            for(int i = 1; i < n; i++) {
+                if(nums[i] < nums[i-1] || numlocs.get(nums[i]) != (numlocs.get(nums[i-1]) + 1)) {
+                    inversions++;
+                }
+            }
+
+            if(inversions + 1 > k) {
+                out.write("NO\n");
+            } else {
+                out.write("YES\n");
+            }
+
             
         }
         out.close();
+    }
+
+    static int[] sorted(int[] nums) {
+        ArrayList<Integer> newnums = new ArrayList<>();
+        for(int i = 0 ; i < nums.length; i++) {newnums.add(nums[i]);}
+        Collections.sort(newnums);
+        int ret[] = new int[nums.length];
+        for(int i = 0 ;i < nums.length; i++) {ret[i] = newnums.get(i);}
+        return ret;
     }
 
     static class FastReader {

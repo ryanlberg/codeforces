@@ -4,28 +4,62 @@ import java.io.InputStreamReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.*;
-public class A {
-   
+public class D {
+
     public static void main(String[] args) {
         FastReader fr = new FastReader();
         PrintWriter out = new PrintWriter(System.out, true);
-        int cases = fr.nextInt();
-        for(int c = 0; c < cases; c++) {
-            int nums = fr.nextInt();
-            int max = Integer.MIN_VALUE;
-            long sum = 0;
-            for(int i = 0; i < nums; i++) {
-                int cur = fr.nextInt();
-                if(cur > max) {
-                    max = cur;
-                }
-                sum += cur;
-            }
-            double value = (double)max + (double)(sum-max)/(nums-1);
-            out.write(value + "\n");
-            
+       
+    
+        int rows = fr.nextInt();
+        int colqs = fr.nextInt();
+        Row[] rowlist = new Row[rows];
+        for(int i = 0; i < rows; i++) {
+            rowlist[i] = new Row();
         }
+        for(int i = 0; i < colqs; i++) {
+            int rowtoadd = fr.nextInt();
+            int a = fr.nextInt();
+            int b = fr.nextInt();
+            rowlist[rowtoadd-1].addColumn(a, b);
+        }
+       
+        for(int i = 0; i < rows; i++) {
+            rowlist[i].sortColumns();
+            System.out.println(rowlist[i]);
+        }
+
+        out.write("0\n");
+    
         out.close();
+    }
+
+    static class Row {
+        ArrayList<ArrayList<Integer>> columnloc;
+
+        public Row() {
+            this.columnloc = new ArrayList<>();
+        }
+
+        public void addColumn(int a, int b) {
+            ArrayList<Integer> toadd = new ArrayList<>();
+            toadd.add(a);
+            toadd.add(b);
+            columnloc.add(toadd);
+        }
+
+        public void sortColumns() {
+            Collections.sort(this.columnloc, (a, b) -> Integer.compare(a.get(0), b.get(0)));
+        }
+
+        public String toString() {
+            String out = "";
+            for(ArrayList<Integer> n : columnloc) {
+                out += n.get(0) + ", " + n.get(1) + " ";
+            }
+            return out;
+        }
+
     }
 
     static class FastReader {

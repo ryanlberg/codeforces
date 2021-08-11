@@ -7,13 +7,41 @@ import java.util.*;
 public class A {
 
 
-   
-
     public static void main(String[] args) {
         FastReader fr = new FastReader();
         PrintWriter out = new PrintWriter(System.out, true);
         int cases = fr.nextInt();
-        for(int c = 0; c < cases; c++) {
+        for (int c = 0; c < cases; c++) {
+            int finalx = fr.nextInt();
+            int finaly = fr.nextInt();
+            int U = 0;
+            int R = 0;
+            int D = 0;
+            int L = 0;
+            String orders = fr.next();
+            for (int i = 0; i < orders.length(); i++) {
+                char curOrder = orders.charAt(i);
+                if (curOrder == 'R') {
+                    R++;
+                }
+                else if (curOrder == 'L') {
+                   L++;
+                }
+                else if(curOrder == 'U') {
+                    U++;
+                }
+                else {
+                   D++;
+                }
+            }
+
+            if(U >= finaly && (D*-1) <= finaly && R >= finalx && (L*-1) <= finalx) {
+                out.write("YES\n");
+            } else {
+                out.write("NO\n");
+            }
+
+           
             
         }
         out.close();

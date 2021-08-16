@@ -4,7 +4,7 @@ import java.io.InputStreamReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.*;
-public class template {
+public class E {
 
 
    

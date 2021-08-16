@@ -7,9 +7,6 @@ import java.util.*;
 public class C {
 
 
-    static HashSet<Integer> seen;
-    static ArrayList<Integer> ret;
-    static boolean found;
     static HashMap<Integer, HashSet<Integer>> map;
     public static void main(String[] args) {
         FastReader fr = new FastReader();
@@ -18,22 +15,20 @@ public class C {
         for(int c = 0; c < cases; c++) {
             map = new HashMap<>();
             int a = fr.nextInt();
-            seen = new HashSet<Integer>();
-            ret = new ArrayList<Integer>();
             for(int i = 1; i <= a+1; i++) {
                 map.put(i, new HashSet<Integer>());
             }
             for(int i = 1; i < a; i++) {
-                map.get(i+1).add(i);
+                map.get(i).add(i+1);
             }
 
-            found = false;
+           
             for(int i = 0; i < a; i++) {
                 int cur = fr.nextInt();
                 if(cur == 0) {
-                    map.get(a+1).add(i+1);
-                } else {
                     map.get(i+1).add(a+1);
+                } else {
+                    map.get(a+1).add(i+1);
                 }
             }
 
@@ -45,41 +40,53 @@ public class C {
             //     System.out.println("");
             // }
 
-            solve(a+1, 0, a+1);
-            if(found) {
-                for(Integer x : ret) {
-                    out.write(x + " ");
+           
+            boolean solved = false;
+            if(map.get(a+1).contains(1)) {
+                solved = true;
+                out.write(a+1 + " ");
+                for(int i = 1; i <= a; i++) {
+                    out.write(i + " ");
                 }
-            } else {
-                out.write("-1");
+                out.write("\n");
             }
-            out.write("\n");
+
+            if(!solved) {
+                if(map.get(a).contains(a+1)) {
+                    solved = true;
+                    for(int i = 1; i <= a + 1; i++) {
+                        out.write(i + " ");
+                    }
+                    out.write("\n");
+                }
+            }
+
+            if(!solved) {
+                for(int i = 1; i <= a; i++) {
+                    if(map.get(i).contains(a+1) && map.get(a+1).contains(i+1)) {
+                        solved = true;
+                        for(int j = 1; j <= i; j++) {
+                            out.write(j + " ");
+                        }
+                        out.write(a+1 + " ");
+                        for(int j = i+1; j <= a; j++) {
+                            out.write(j + " ");
+                        }
+                        out.write("\n");
+                        break;
+                    }
+                }
+            }
+
+            if(!solved) {
+                out.write("-1\n");
+            }
+            
         }
         out.close();
     }
 
-   
 
-    static void solve( int start, int depth, int size) {
-        if(depth == size-1) {
-            found = true;
-            ret.add(start);
-            return;
-        } else {
-            for (Integer x : map.get(start)) {
-                if(!seen.contains(x)) {
-                    seen.add(x);
-                    solve(x, depth+1, size);
-                    if(found) {
-                        ret.add(start);
-                        return;
-                    }
-                    seen.remove(x);
-                }
-
-            }
-        }
-    }
     static class FastReader {
 
         BufferedReader br;

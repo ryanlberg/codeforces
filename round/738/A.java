@@ -4,7 +4,7 @@ import java.io.InputStreamReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.*;
-public class template {
+public class A {
 
 
    
@@ -13,8 +13,13 @@ public class template {
         FastReader fr = new FastReader();
         PrintWriter out = new PrintWriter(System.out, true);
         int cases = fr.nextInt();
-        for(int c = 0; c < cases; c++) {
-            
+        for(int tt = 0; tt < cases; tt++) {
+            int nums = fr.nextInt();
+            int cur = fr.nextInt();
+            for(int i = 1; i < nums; i++) {
+                cur &= fr.nextInt();
+            }
+            out.write(cur + "\n");
         }
         out.close();
     }

@@ -52,11 +52,12 @@ https://codeforces.com/contest/1560/problem/D
 ## Problem E: Polycarp and String Transformation. (Solved after Contest)
 https://codeforces.com/contest/1560/problem/E
 
-<ins>Strategy</ins>: 
+<ins>Strategy</ins>: I do one pass and count the occurences of each letter. Then, from the end of the string, the first occurrence of each letter the we come upon will be the last letter deleted. There will be the (count of that letter) divided by the (number of individual letters) in this last string addition. From here I will get the order of the deleted letters, and a potential starting string. I will run the algorithm given in the problem and see if the final string matches the input.
+
 <br>
-<i>Time Complexity</i>:
+<i>Time Complexity</i>: O(N^2) where N is the length of the original starting string
 <br>
-<i>Space Complexity</i>:
+<i>Space Complexity</i>: O(M) where M is the length of the original input string. 
 
 ---
 

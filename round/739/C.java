@@ -14,7 +14,38 @@ public class C {
         PrintWriter out = new PrintWriter(System.out, true);
         int cases = fr.nextInt();
         for(int c = 0; c < cases; c++) {
-            
+            int curnum = fr.nextInt();
+            int startrow = 1;
+            int outward = 1;
+            int downward = 1;
+            while(startrow * startrow < curnum) {
+                startrow++;
+                outward++;
+                downward++;
+            }
+            boolean found = false;
+            int startnum = startrow*startrow;
+            for(int i = 1; i < outward; i++) {
+                //System.out.println(startnum + " " + curnum + "(" + downward + ", " + i + ")");
+                if(startnum == curnum) {
+                    found = true;
+                    out.write(downward + " " + i + "\n");
+                    break;
+                }
+                else startnum--;
+            }
+            if(!found) {
+                for(int i = downward; i >= 1; i--) {
+                    //System.out.println(startnum + " " + curnum + "(" + downward + ", " + i + ")");
+                    if(startnum == curnum) {
+                        out.write(i + " " + outward + "\n");
+                        break;
+                    }
+                    startnum--;
+                }
+                
+            }
+
         }
         out.close();
     }

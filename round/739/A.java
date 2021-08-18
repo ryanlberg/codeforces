@@ -13,8 +13,18 @@ public class A {
         FastReader fr = new FastReader();
         PrintWriter out = new PrintWriter(System.out, true);
         int cases = fr.nextInt();
+
+        ArrayList<Integer> ca = new ArrayList<>();
+        int i = 1;
+        while(ca.size() < 1001) {
+            if(i % 3 != 0 && i % 10 != 3) {
+                ca.add(i);
+            }
+            i++;
+        }
         for(int c = 0; c < cases; c++) {
-            
+            int cur = fr.nextInt();
+            out.write(ca.get(cur-1) + "\n");
         }
         out.close();
     }

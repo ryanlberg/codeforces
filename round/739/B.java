@@ -13,7 +13,21 @@ public class B {
         FastReader fr = new FastReader();
         PrintWriter out = new PrintWriter(System.out, true);
         int cases = fr.nextInt();
-        for(int c = 0; c < cases; c++) {
+        for(int cc = 0; cc < cases; cc++) {
+            int a = fr.nextInt();
+            int b = fr.nextInt();
+            int c = fr.nextInt();
+
+            long nums = (long)Math.abs(a - b) * 2;
+            if(a > nums || b > nums || c > nums) {
+                out.write("-1\n");
+            } else {
+                if(c > nums/2) {
+                    out.write((c - nums/2) + "\n");
+                } else {
+                    out.write((c + nums/2) + "\n");
+                }
+            }
             
         }
         out.close();

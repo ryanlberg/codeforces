@@ -29,12 +29,16 @@ public class E {
             boolean cando = true;
             int curneeded = letters.size();
             HashSet<Character> consumed = new HashSet<Character>();
+            int original_end = 0;
             int i = cur.length()-1;
             while (i >= 0 && cando) {
-                System.out.println(i);
                 if(letters.size() == 1) {
-                    s = cur.substring(0, i+1);
-                    for(Character x : letters) {t = x + t;}
+                   
+                    for(Character x : letters) {
+                        t = x + t;
+                        original_end += lettercounts.get(x);
+                    }
+                    s = cur.substring(0, original_end);
                     break;
                 }
                 while(consumed.contains(cur.charAt(i))) {
@@ -44,6 +48,8 @@ public class E {
                 char current = cur.charAt(i);
                 consumed.add(current);
                 int seen = 0;
+                original_end += lettercounts.get(current)/curneeded;
+            
                 if(seen < lettercounts.get(current)/curneeded) {
                     while(seen < lettercounts.get(current)/curneeded) {
                             //System.out.println(current + " " + seen + " "  + lettercounts.get(current)/curneeded);
@@ -62,8 +68,8 @@ public class E {
                 letters.remove(current);
                 curneeded = letters.size();
             }
-
-            if(cando) {
+            //System.out.println(genIt(s, t) + " " + cur + ": " + s + ", " + t);
+            if(genIt(s, t).equals(cur)) {
                 out.write(s + " " + t + "\n");
             } else {
                 out.write(-1 + "\n");
@@ -72,6 +78,20 @@ public class E {
 
         }
         out.close();
+    }
+
+    static String genIt(String s, String t) {
+        StringBuilder ret = new StringBuilder();
+        HashSet<Character> seen = new HashSet<>();
+        for(int i = 0; i < t.length(); i++) {
+            for(int j = 0; j < s.length(); j++) {
+                if(!seen.contains(s.charAt(j))) {
+                    ret.append(s.charAt(j));
+                }
+            }
+            seen.add(t.charAt(i));
+        }
+        return ret.toString();
     }
 
     static class FastReader {

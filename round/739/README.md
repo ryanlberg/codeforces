@@ -1,5 +1,8 @@
 # Codeforces Round 739
+
 https://codeforces.com/contest/1560
+
++67
 
 ## Problem A: Dislike of Threes. (Solved in Contest)
 https://codeforces.com/contest/1560/problem/A

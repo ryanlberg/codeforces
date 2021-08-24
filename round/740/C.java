@@ -14,10 +14,59 @@ public class C {
         PrintWriter out = new PrintWriter(System.out, true);
         int cases = fr.nextInt();
         for(int c = 0; c < cases; c++) {
-            
+            ArrayList<ArrayList<Integer>> ordering = new ArrayList<>();
+            int caves = fr.nextInt();
+            for(int i = 0; i < caves; i++) {
+                ArrayList<Integer> in_and_size = getStartNeeded(fr);
+                ordering.add(in_and_size);
+            }
+
+            Collections.sort(ordering, new Comparator<ArrayList<Integer>> () {
+                public int compare(ArrayList<Integer> a, ArrayList<Integer> b) {
+                    int test = a.get(0).compareTo(b.get(0));
+                    if(test == 0) {
+
+                        return -a.get(1).compareTo(b.get(1));
+                    }
+                    return test;
+                 }
+            });
+
+
+            out.write(getMin(ordering) + "\n");
         }
         out.close();
     }
+
+    static int getMin(ArrayList<ArrayList<Integer>> ordering) {
+        int min = ordering.get(0).get(0);
+        int current = min + ordering.get(0).get(1);
+        int monstersseen = ordering.get(0).get(1);
+        for(int i = 1; i < ordering.size(); i++) {
+            ArrayList<Integer> curcave = ordering.get(i);
+            if(curcave.get(0) > current) {
+                min = curcave.get(0)-monstersseen;
+               
+            }
+            current = min + monstersseen+curcave.get(1);
+            monstersseen += curcave.get(1);
+        }
+
+        return min;
+    }
+    static ArrayList<Integer> getStartNeeded(FastReader fr) {
+        ArrayList<Integer> out = new ArrayList<>();
+        int monsters = fr.nextInt();
+        int inNeeded = 0;
+        for(int i = 0; i < monsters; i++) {
+            int current = fr.nextInt();
+            inNeeded = Math.max(inNeeded, current - i + 1);
+        }
+        out.add(inNeeded);
+        out.add(monsters);
+        return out;
+    }
+
 
     static class FastReader {
 

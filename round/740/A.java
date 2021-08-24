@@ -6,17 +6,64 @@ import java.io.PrintWriter;
 import java.util.*;
 public class A {
 
-
-   
-
     public static void main(String[] args) {
         FastReader fr = new FastReader();
         PrintWriter out = new PrintWriter(System.out, true);
         int cases = fr.nextInt();
         for(int c = 0; c < cases; c++) {
+            int size = fr.nextInt();
+            int[] nums = new int[size];
+            for(int i = 0; i < size; i++) {
+                nums[i] = fr.nextInt();
+            }
+
+            out.write(solve(nums) + "\n");
             
         }
         out.close();
+    }
+
+    static int solve(int[] nums) {
+        int iteration = 0;
+        while(!isSorted(nums)) {
+            if(iteration % 2 == 0) {
+                doOdd(nums);
+            } else {
+                doEven(nums);
+            }
+            iteration++;
+        }
+        return iteration;
+        
+    }
+
+    static void doEven(int[] nums) {
+        for(int i = 1; i < nums.length-1; i+=2) {
+            if(nums[i] > nums[i+1]) {
+                int temp = nums[i];
+                nums[i] = nums[i+1];
+                nums[i+1] = temp;
+            }
+        }
+    }
+
+    static void doOdd(int[] nums) {
+        for(int i = 0; i < nums.length-1; i+=2) {
+            if(nums[i] > nums[i+1]) {
+                int temp = nums[i];
+                nums[i] = nums[i+1];
+                nums[i+1] = temp;
+            }
+        }
+    }
+
+    static boolean isSorted(int[] nums) {
+        for(int i = 0; i < nums.length-1; i++) {
+            if(nums[i] > nums[i+1]) {
+                return false;
+            }
+        }
+        return true;
     }
 
     static class FastReader {

@@ -7,6 +7,7 @@ import java.util.*;
 public class B {
 
 
+    static TreeSet<Integer> breaks;
    
 
     public static void main(String[] args) {
@@ -14,9 +15,40 @@ public class B {
         PrintWriter out = new PrintWriter(System.out, true);
         int cases = fr.nextInt();
         for(int c = 0; c < cases; c++) {
+            int alice = fr.nextInt();
+            int bob = fr.nextInt();
+    
+            out.write(breaks.size() + " \n");
+            for(Integer x : breaks) {
+                out.write(x + " ");
+            }
+            out.write("\n");
             
         }
         out.close();
+    }
+
+    static void getBreaks(int alice, int bob, int starter, int breakseen, int total) {
+        if(alice == 0 && bob == 0) {
+            breaks.add(breakseen);
+            breaks.add(total - breakseen);
+        } 
+        else if(starter == 0) {
+            if(alice > 0) {
+                getBreaks(alice-1, bob, 1, breakseen, total);
+            }
+            if(bob > 0) {
+                getBreaks(alice, bob-1, 1, breakseen+1, total);
+            }
+        }
+        else if(starter == 1) {
+            if(alice > 0) {
+                getBreaks(alice-1, bob, 0, breakseen+1, total);
+            }
+            if(bob > 0) {
+                getBreaks(alice, bob-1, 0, breakseen, total);
+            }
+        }
     }
 
     static class FastReader {

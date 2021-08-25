@@ -17,7 +17,26 @@ public class B {
         for(int c = 0; c < cases; c++) {
             int alice = fr.nextInt();
             int bob = fr.nextInt();
-    
+            breaks = new TreeSet<>();
+            
+            int alice_games = (alice+bob+1)/2;
+            int bob_games = (alice+bob) - alice_games;
+            int min_breaks = 0;
+            if(alice > alice_games) {
+               min_breaks += alice - alice_games;
+            }
+            if(bob > bob_games) {
+                min_breaks += bob - bob_games;
+            }
+            
+            breaks.add(min_breaks);
+            breaks.add((alice+bob)- min_breaks);
+
+            for(int i = 0; i < Math.min(alice, bob); i++) {
+                breaks.add(min_breaks + 2*(i+1));
+                breaks.add((alice+bob) - (min_breaks + 2*(i+1)));
+            }
+
             out.write(breaks.size() + " \n");
             for(Integer x : breaks) {
                 out.write(x + " ");

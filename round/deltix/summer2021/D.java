@@ -43,28 +43,22 @@ public class D {
 
         for(int i = 3; i < n; i++) {
             int cur = 0;
-            System.out.println("and " + (i-1) + " " + i);
+            System.out.println("and " + (i) + " " + (i+1));
             System.out.flush();
-            cur = fr.nextInt();
-            System.out.println("or " + (i-1) + " " + i);
+            cur += fr.nextInt();
+            System.out.println("or " + (i) + " " + (i+1));
             System.out.flush();
             cur += fr.nextInt();
             curand[i] = (cur - curand[i-1]);
         }
         
-        int[] s = sort(curand);
-        out.write(s[k-1]+ "\n");
+        Arrays.sort(curand);
+       
+        out.write("finish " + curand[k-1]+ "\n");
+        System.out.flush();
     
         
         out.close();
-    }
-
-    static int[] sort(int[] nums) {
-        ArrayList<Integer> numbas = new ArrayList<>();
-        for(int i = 0; i < nums.length; i++) { numbas.add(nums[i]);}
-        Collections.sort(numbas);
-        for(int i = 0; i < nums.length; i++) { nums[i] = numbas.get(i);}
-        return nums;
     }
 
     static class FastReader {

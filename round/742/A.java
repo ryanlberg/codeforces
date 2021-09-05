@@ -4,17 +4,32 @@ import java.io.InputStreamReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.*;
-public class template {
+public class A {
 
-
-   
 
     public static void main(String[] args) {
         FastReader fr = new FastReader();
         PrintWriter out = new PrintWriter(System.out, true);
         int cases = fr.nextInt();
         for(int c = 0; c < cases; c++) {
-            
+            int size = fr.nextInt();
+            String s = fr.next();
+            int i = 0;
+            String ret = "";
+            while(i < s.length()) {
+                if(s.charAt(i) == 'L') {
+                    ret += "LR";
+                    i += 2;
+                } else {
+                    if(s.charAt(i) == 'U') {
+                        ret += 'D';
+                    } else {
+                        ret += 'U';
+                    }
+                    i++;
+                }
+            }
+            out.write(ret + "\n");
         }
         out.close();
     }

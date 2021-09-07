@@ -16,22 +16,25 @@ public class C {
         for(int c = 0; c < cases; c++) {
             String num = fr.next();
             
-            if(num.length() == 2) {
-                out.write((Integer.parseInt(num) % 10 * 2) + "\n");
-            } else if (num.length() == 1) {
-                out.write((Integer.parseInt(num) - 1)+ "\n");
+            String one = "";
+            String two = "";
+            for(int i = 0; i < num.length(); i++) {
+                if(i % 2 == 0) {
+                    one += num.charAt(i);
+                } else {
+                    two += num.charAt(i);
+                }
             }
-            int start = 0;
-            int total = 1;
-            while(start < num.length() && start != num.length() - 1 || start != num.length()-2) {
-                
-            }
-            start = 1; {
-            while(start < num.length() && start != num.length() - 1 || start != num.length()-2) {
 
+            long onel = 0;
+            long twol = 0;
+            if(one.length() > 0) {
+                onel = Long.parseLong(one);
             }
-            out.write(total + "\n");
+            if(two.length() > 0) {
+                twol = Long.parseLong(two);
             }
+            out.write(((onel+1) * (twol+1) - 2) + "\n"); 
         }
         out.close();
     }

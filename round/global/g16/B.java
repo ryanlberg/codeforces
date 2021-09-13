@@ -14,7 +14,34 @@ public class B {
         PrintWriter out = new PrintWriter(System.out, true);
         int cases = fr.nextInt();
         for(int c = 0; c < cases; c++) {
+            String num = fr.next();
+            int minnum = 0;
+
+            int zeros = 0;
+            int ones = 0;            
             
+            int i = 0;
+            while(i < num.length()) {
+                boolean zerofound = false;
+                while(i < num.length() && num.charAt(i) == '0') {
+                    zerofound = true;
+                    i++;
+                }
+                if(zerofound) {
+                    zeros++;
+                }
+                boolean onefound = false;
+                while(i < num.length() && num.charAt(i) == '1') {
+                    onefound = true;
+                    i++;
+                }
+                if(onefound) {
+                    ones++;
+                }
+            }
+            
+
+            out.write(Math.min(2, zeros) + "\n");
         }
         out.close();
     }

@@ -14,7 +14,55 @@ public class C {
         PrintWriter out = new PrintWriter(System.out, true);
         int cases = fr.nextInt();
         for(int c = 0; c < cases; c++) {
-            
+            int size = fr.nextInt();
+            String astring = fr.next();
+            String bstring = fr.next();
+
+            int max = 0;
+            int i = 0;
+            while(i < size) {
+                char achar = astring.charAt(i);
+                char bchar = bstring.charAt(i);
+                if(achar == '1' && bchar == '0' || bchar == '1' && achar == '0') {
+                    i++;
+                    max += 2;
+                
+                }
+
+                else if(achar == '0' && bchar == '0') {
+                    if(i < astring.length() - 1) {
+                        if(astring.charAt(i+1) == '1' && bstring.charAt(i+1) == '1') {
+                            max += 2;
+                            i += 2;
+                        } else {
+                            i++;
+                            max += 1;
+                        }
+                    } else {
+                        i++;
+                        max += 1;
+                        
+                    }
+                }
+
+                else if(achar == '1' && bchar == '1') {
+                    if(i < size-1) {
+                        if(astring.charAt(i+1) == '0' && bstring.charAt(i+1) == '0') {
+                            max += 2;
+                            i += 2;
+                        } else {
+                            i++;
+                        }
+                    } else {
+                        i++;
+                    }
+                    
+                   
+                }
+
+            }
+
+            out.write(max + "\n");
         }
         out.close();
     }

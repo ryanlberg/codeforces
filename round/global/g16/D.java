@@ -14,7 +14,40 @@ public class D {
         PrintWriter out = new PrintWriter(System.out, true);
         int cases = fr.nextInt();
         for(int c = 0; c < cases; c++) {
-            
+            int n = fr.nextInt();
+            int m = fr.nextInt();
+            int[] nums = new int[n*m];
+            int[] incoming = new int[n*m];
+            HashMap<Integer, Stack<Integer>> spots = new HashMap<>();
+            for(int i = 0; i < n*m; i++) {
+                int cur = fr.nextInt();
+                nums[i] = cur;
+                incoming[i] = cur;
+            }
+            Arrays.sort(nums);
+            for(int i = 0; i < nums.length; i++) {
+                if(!spots.containsKey(nums[i])) {
+                    spots.put(nums[i], new Stack<Integer>());
+                }
+                spots.get(nums[i]).push(i);
+            }
+
+            int[] driver = new int[n*m];
+            Arrays.fill(driver, -1);
+            int inconv = 0;
+            for(int i = 0; i < incoming.length; i++) {
+                int spot = spots.get(incoming[i]).pop();
+                for(int j = 0; j < spot; j++) {
+                    if(driver[j] != -1) {
+                        inconv++;
+                    }
+                } 
+                driver[spot] = spot;
+            }
+
+            out.write(inconv + "\n");
+
+
         }
         out.close();
     }

@@ -14,7 +14,20 @@ public class A {
         PrintWriter out = new PrintWriter(System.out, true);
         int cases = fr.nextInt();
         for(int c = 0; c < cases; c++) {
-            
+            int a = fr.nextInt();
+            int b = fr.nextInt();
+            int leftHalf = -1;
+            if(a % 2 == 0) {
+                leftHalf = a/2-1;
+            } else {
+                leftHalf = a/2;
+            }
+
+            if(b < (a - leftHalf)) {
+                out.write(0+"\n");
+            } else {
+                out.write((b / (a-leftHalf) + "\n"));
+            }
         }
         out.close();
     }

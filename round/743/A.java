@@ -14,7 +14,21 @@ public class A {
         PrintWriter out = new PrintWriter(System.out, true);
         int cases = fr.nextInt();
         for(int c = 0; c < cases; c++) {
-            
+            int len = fr.nextInt();
+            String num  = fr.next();
+            int total = 0;
+            for(int i = len-1; i >= 0; i--) {
+                if(i == len-1) {
+                    total += Character.getNumericValue(num.charAt(i));
+                    
+                } else {
+                    if(Character.getNumericValue(num.charAt(i)) != 0) {
+                        total += Character.getNumericValue(num.charAt(i)) + 1;
+                    }
+                }
+            } 
+
+            out.write(total + "\n");
         }
         out.close();
     }

@@ -4,7 +4,7 @@ import java.io.InputStreamReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.*;
-public class A {
+public class E {
 
 
    
@@ -14,26 +14,28 @@ public class A {
         PrintWriter out = new PrintWriter(System.out, true);
         int cases = fr.nextInt();
         for(int c = 0; c < cases; c++) {
-            String s = fr.next();
-            int as = 0;
-            int bs = 0;
-            int cs = 0;
-            for(int i = 0; i < s.length(); i++) {
-                if (s.charAt(i) == 'A') {
-                    as++;
-                } else if(s.charAt(i) == 'B') {
-                    bs++;
+            int size = fr.nextInt();
+            int[] nums = new int[size];
+            for(int i = 0; i < size; i++) {
+                nums[i] = fr.nextInt();
+            }
+            Deque<Integer> ret = new LinkedList<>();
+            for(int i = 0; i < size; i++) {
+                if(ret.size() == 0) {
+                    ret.addFirst(nums[i]);
                 } else {
-                    cs++;
+                    if(ret.peekFirst() < nums[i]) {
+                        ret.addLast(nums[i]);
+                    } else {
+                        ret.addFirst(nums[i]);
+                    }
                 }
             }
 
-            if(as + cs == bs) {
-                out.write("YES\n");
-            } else {
-                out.write("NO\n");
+            while(ret.size() > 0) {
+                out.write(ret.pollFirst() + " ");
             }
-            
+            out.write("\n");
         }
         out.close();
     }

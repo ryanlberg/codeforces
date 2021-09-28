@@ -14,9 +14,46 @@ public class B {
         PrintWriter out = new PrintWriter(System.out, true);
         int cases = fr.nextInt();
         for(int c = 0; c < cases; c++) {
-            
+            int size = fr.nextInt();
+            int[] nums = new int[size];
+            int[] tosort = new int[size];
+            ArrayList<int[]> sequens = new ArrayList<>();
+            for(int i = 0; i < size; i++) {
+                int cur = fr.nextInt();
+                nums[i] = cur;
+                tosort[i] = cur;
+            }
+
+            Arrays.sort(tosort);
+
+            for(int i = 0; i < tosort.length; i++) {
+
+                if(nums[i] != tosort[i]) {
+                    int j = i;
+                    while(nums[j] != tosort[i]) {
+                        j++;
+                    }
+
+                    sequens.add(new int[]{i+1, j+1, j-i});
+                    shift(nums, i, j);
+                }
+            }
+
+            out.write(sequens.size() + "\n");
+            for(int[] x : sequens) {
+                out.write(x[0] + " " + x[1] + " " + x[2] + "\n");
+            }
         }
         out.close();
+    }
+
+    static void shift(int[] nums, int start, int end) {
+        int temp = nums[end];
+        for(int i = start; i <= end; i++) {
+            int x = nums[i];
+            nums[i] = temp;
+            temp = x;
+        }
     }
 
     static class FastReader {

@@ -14,6 +14,41 @@ public class D {
         PrintWriter out = new PrintWriter(System.out, true);
         int cases = fr.nextInt();
         for(int c = 0; c < cases; c++) {
+            int people = fr.nextInt();
+            PriorityQueue<int[]> peeps = new PriorityQueue<>((a, b) -> {
+                if(a[1] >= b[1]) {
+                    return -1;
+                } else {
+                    return 1;
+                }
+            });
+
+            for(int i = 0 ; i < people; i++) {
+                int cur = fr.nextInt();
+                if (cur > 0) {
+                    peeps.add(new int[]{i+1, cur});
+                }
+            }
+
+            ArrayList<int[]> ret = new ArrayList<>();
+            while(peeps.size() > 1) {
+                int[] a = peeps.poll();
+                int[] b = peeps.poll();
+                ret.add(new int[]{a[0], b[0]});
+                a[1] -= 1;
+                b[1] -= 1;
+                if(a[1] > 0) {
+                    peeps.add(a);
+                }
+                if(b[1] > 0) {
+                    peeps.add(b);
+                }
+            }
+
+            out.write(ret.size() + "\n");
+            for(int[] x : ret) {
+                out.write(x[0] + " " + x[1] + "\n");
+            }
             
         }
         out.close();

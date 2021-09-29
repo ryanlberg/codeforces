@@ -53,3 +53,13 @@ https://codeforces.com/contest/1579/problem/E1
 <br>
 
 ---
+
+## Problem E2: Array Optimization by Deque. (Solved after Contest).
+https://codeforces.com/contest/1579/problem/E2
+
+<ins>Strategy</ins>: First of all you need to do cooridnate compression so all values fit in the range from 1 to 2*10^5. Once this is done add each value to a segment tree. Before adding, find the sum of all the values in the range from 1 to current_value -1 and current_value+1 to size of tree. Add the minimum of this to the total, then add the value to the tree. Greedy Solution.
+<br>
+<i>Time Complexity</i>: O(n * log(n))
+<br>
+
+---

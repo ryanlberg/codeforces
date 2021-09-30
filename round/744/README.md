@@ -63,3 +63,13 @@ https://codeforces.com/contest/1579/problem/E2
 <br>
 
 ---
+
+## Problem F: Array Stabilization (AND version). (Solved after Contest)
+https://codeforces.com/contest/1579/problem/F
+
+<ins>Strategy</ins>: Every (i+d)%size will end up in its on cycle. It is enough to separate each of these into its own subcycle. If the subcycle contains does not contain a 0, then the whole sysytem will never reach all zeros. If it does, the longest it will take is the longest consecutive chain of 1's.
+<br>
+<i>Time Complexity</i>: O(n)
+<br>
+
+---

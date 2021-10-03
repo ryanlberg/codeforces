@@ -4,9 +4,7 @@ import java.io.InputStreamReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.*;
-public class C {
-
-
+public class E {
    
 
     public static void main(String[] args) {
@@ -14,8 +12,7 @@ public class C {
         PrintWriter out = new PrintWriter(System.out, true);
         int cases = fr.nextInt();
         for(int c = 0; c < cases; c++) {
-            int n = fr.nextInt();
-            int k = fr.nextInt();
+            
         }
         out.close();
     }

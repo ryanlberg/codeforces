@@ -7,14 +7,33 @@ import java.util.*;
 public class A {
 
 
-   
-
     public static void main(String[] args) {
         FastReader fr = new FastReader();
         PrintWriter out = new PrintWriter(System.out, true);
         int cases = fr.nextInt();
         for(int c = 0; c < cases; c++) {
-            
+            int weapons = fr.nextInt();
+            int health = fr.nextInt();
+            ArrayList<Integer> damage = new ArrayList<>();
+            for(int i = 0; i < weapons; i++) {
+                damage.add(fr.nextInt());
+            }
+
+            Collections.sort(damage);
+           
+            int weapon1 = damage.get(damage.size()-1);
+            int weapon2 = damage.get(damage.size()-2);
+            if(health % (weapon1+weapon2) == 0) {
+                out.write(health / (weapon1+weapon2)*2 + "\n");
+            } else {
+                int leftover = health % (weapon1 + weapon2);
+                if(leftover <= weapon1) {
+                    out.write((health/(weapon1+weapon2)*2 + 1) + "\n");
+                } else {
+                    out.write((health/(weapon1+weapon2)*2+2) + "\n");
+                } 
+            }
+           
         }
         out.close();
     }

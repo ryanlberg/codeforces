@@ -7,16 +7,74 @@ import java.util.*;
 public class B {
 
 
-   
 
     public static void main(String[] args) {
         FastReader fr = new FastReader();
         PrintWriter out = new PrintWriter(System.out, true);
         int cases = fr.nextInt();
         for(int c = 0; c < cases; c++) {
+            int size = fr.nextInt();
+            int x = fr.nextInt();
+            int[] nums = new int[size];
+            int[] check = new int[size];
+           
+            for(int i = 0; i < size; i++) {
+                int cur = fr.nextInt();
+                nums[i] = cur;
+                check[i] = cur;
+            }
+
+            sort(check);
+
+            if(x <= (size/2)) {
+                out.write("YES\n");
+            } else {
+                int mid = (size/2);
+                boolean cando = true;
+                
+                for(int i =  mid; i < nums.length; i++) {
+                    if(nums[i] != check[i]) {
+                        if(i + x < size || i - x >= 0) {
+                            continue;
+                        } else {
+                            cando = false;
+                            break;
+                        }
+                    }
+                }
+                
+                if(cando) {
+                    for(int i = mid; i >= 0; i--) {
+                        if(nums[i] != check[i]) {
+                            if(i + x < size || i - x >= 0) {
+                                continue;
+                            } else {
+                                cando = false;
+                                break;
+                            }
+                        }
+                    }
+                }
+                
+
+                if(cando) {
+                    out.write("YES\n");
+                } else {
+                    out.write("NO\n");
+                }
+            }
+            
+
             
         }
         out.close();
+    }
+
+    static void sort(int[] nums) {
+        ArrayList<Integer> tosort = new ArrayList<>();
+        for(int i = 0; i < nums.length; i++) {tosort.add(nums[i]);}
+        Collections.sort(tosort);
+        for(int i = 0 ; i < nums.length; i++) {nums[i] = tosort.get(i);}
     }
 
     static class FastReader {

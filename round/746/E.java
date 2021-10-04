@@ -10,10 +10,19 @@ public class E {
     public static void main(String[] args) {
         FastReader fr = new FastReader();
         PrintWriter out = new PrintWriter(System.out, true);
-        int cases = fr.nextInt();
-        for(int c = 0; c < cases; c++) {
-            
+        int size = fr.nextInt();
+        int[] nums = new int[size];
+        int[] ands = new int[size+1];
+        int[] xors = new int[size+1];
+
+        for(int i = 0; i < size; i++) {
+            int cur = fr.nextInt();
+            nums[i] = cur;
+            ands[i+1] = cur & ands[i];
+            xors[i+1] = cur ^ xors[i];  
         }
+
+        
         out.close();
     }
 

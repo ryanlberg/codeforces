@@ -10,13 +10,11 @@ public class D {
     public static void main(String[] args) {
         FastReader fr = new FastReader();
         PrintWriter out = new PrintWriter(System.out, true);
-        int cases = fr.nextInt();
-        for(int c = 0; c < cases; c++) {
-            
-        }
+        
         out.close();
     }
 
+   
     static class FastReader {
 
         BufferedReader br;

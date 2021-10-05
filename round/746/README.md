@@ -22,3 +22,13 @@ https://codeforces.com/contest/1592/problem/B
 <br>
 
 ---
+
+## Problem C: Bakry and Partitioning.  (Solved after Contest);
+https://codeforces.com/contest/1592/problem/C
+
+<ins>Strategy</ins>:If the xor of all values is 0, then you can remove at least one specific edge and the xor of the values will be the same and the answer is YES. Otherwise you need two edges. If you can only remove 1 edge at this point, the answer is NO. Otherwise you can calculate the number of subtrees that xor to the value of all values totaled. If this number is > 2. Then the answer is YES, otherwise it is NO.
+<br>
+<i>Time Complexity</i>: O(n^2)
+<br>
+
+---

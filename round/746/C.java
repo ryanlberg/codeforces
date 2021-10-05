@@ -7,7 +7,7 @@ import java.util.*;
 public class C {
 
 
-   
+   static int count;
 
     public static void main(String[] args) {
         FastReader fr = new FastReader();
@@ -19,9 +19,10 @@ public class C {
             int[][] cons = new int[nodes-1][2];
 
             G[] no = new G[nodes];
-
+            int needed = 0;
             for(int i = 0; i < nodes; i++) {
                 int val = fr.nextInt();
+                needed ^= val;
                 no[i] = new G(val, i);
             }
 
@@ -33,25 +34,24 @@ public class C {
             }
            
             for(int i = 0; i < cons.length; i++) {
-                int from = Math.min(cons[i][0] - 1, cons[i][1] - 1);
-                int to = Math.max(cons[i][0] - 1, cons[i][1] - 1);
-                no[from].addChild(no[to], from);   
+                int from = cons[i][0] - 1;
+                int to =  cons[i][1] - 1;
+                no[from].addChild(no[to]);   
+                no[to].addChild(no[from]);
             }
 
-            no[0].setCum(0);
-            int needed = no[0].cum;
             if(needed == 0) {
                 out.write("YES\n");
-            } else if(needed != 0 && k == 2) {
+            } else if(k == 2) {
                 out.write("NO\n");
             } else {
-                ArrayList<Node> nodelist = new ArrayList<>();
-                for(int i = 0; i < nodes; i++) {
-                    nodelist.add(new Node(no[i].depth, no[i]));
-                }
-                Collections.sort(nodelist);
-                for(Node x : nodelist) {
-                    System.out.println(x);
+                count = 0;
+                dfs(no[0], no[0], needed);
+                
+                if(count > 2) {
+                    out.write("YES\n");
+                } else {
+                    out.write("NO\n");
                 }
             }
            
@@ -61,26 +61,20 @@ public class C {
 
     }
 
-    static class Node implements Comparable<Node> {
-        int depth;
-        G no;
-
-        public Node(int depth, G node) {
-            this.depth = depth;
-            this.no = node;
-        }
-
-        public int compareTo(Node that) {
-            if(this.depth >= that.depth) {
-                return -1;
+    static int dfs(G node, G node1, int target) {
+        int cur = node.value;
+        for(G x : node.getChildren()) {
+            if(x.node == node1.node) {
+                continue;
             }
-            return 1;
+            cur ^= dfs(x, node, target);
         }
-
-        public String toString() {
-            String out = "";
-            out += "Node : " + no.value + ", Depth: " + no.depth;
-            return out;
+        
+        if(cur == target) {
+            count++;
+            return 0;
+        } else{
+            return cur;
         }
     }
 
@@ -89,14 +83,12 @@ public class C {
         int cum;
         int depth;
         int node;
-        int from;
         ArrayList<G> children;
 
         public G(int value, int node) {
             this.value = value;
             this.cum = 0;
             this.node = node;
-            
             children = new ArrayList<>();
         }
 
@@ -109,8 +101,8 @@ public class C {
             cum ^= value;
         }
 
-        public void addChild(G childr, int from) {
-            this.from = from;
+        public void addChild(G childr) {
+        
             this.children.add(childr);
         }
         

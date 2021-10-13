@@ -14,43 +14,21 @@ public class B {
         PrintWriter out = new PrintWriter(System.out, true);
         int cases = fr.nextInt();
         for(int c = 0; c < cases; c++) {
-            long num = fr.nextLong();
-            min = Integer.MAX_VALUE;
-            int deleted = 0;
-            while(num % 5 != 0) {
-                num /= 10;
-                deleted++;
+            int min = Integer.MAX_VALUE;
+            String num = fr.next();
+            for(int i = 0; i < num.length(); i++) {
+                for(int j = i+1; j < num.length(); j++) {
+                    String curnum = Character.toString(num.charAt(i)) + Character.toString(num.charAt(j));
+                    if(Integer.parseInt(curnum) % 25 == 0) {
+                        int length = num.length() - (i + 2);
+                        min = Math.min(min, length);
+                    }
+                }
             }
-           
-           
-            if(num % 25 == 0) {
-                out.write((deleted) + "\n");
-                continue;
-            }
-            getMin(Long.toString(num), 0);
-           
-            out.write((min + deleted) + "\n");
-           
+            out.write(min + "\n");
+            
         }
         out.close();
-    }
-
-    static void getMin(String number, int curnum) {
-        if(number.length() <= 1) {
-            min = Math.min(curnum, min);
-            return;
-        }
-        long num = Long.parseLong(number);
-        if(num % 25 == 0) {
-            min = Math.min(curnum, min);
-            return;
-        }
-        for(int i = 0; i < number.length(); i++) {
-            String left = number.substring(0, i);
-            String right = number.substring(i+1, number.length());
-            getMin(left+right, curnum+1); 
-        }
-
     }
 
     static class FastReader {

@@ -14,7 +14,29 @@ public class B {
         PrintWriter out = new PrintWriter(System.out, true);
         int cases = fr.nextInt();
         for(int c = 0; c < cases; c++) {
-            
+            int n = fr.nextInt();
+            int q = fr.nextInt();
+            HashSet<Integer> rootvals = new HashSet<>();
+            for(int i = 1; i <= n ; i++) {
+                rootvals.add(i);
+            }
+            for(int i = 0; i < q; i++) {
+                int a = fr.nextInt();
+                int b = fr.nextInt();
+                int cc = fr.nextInt();
+                rootvals.remove(b);
+            }
+            int root = -1;
+            for(int x : rootvals) {
+                root = x;
+                break;
+            }
+
+            for(int i = 1; i <= n; i++) {
+                if(i != root) {
+                    out.write(root + " " + i + "\n");
+                }
+            }
         }
         out.close();
     }

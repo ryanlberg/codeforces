@@ -7,16 +7,61 @@ import java.util.*;
 public class A {
 
 
-   
 
     public static void main(String[] args) {
         FastReader fr = new FastReader();
         PrintWriter out = new PrintWriter(System.out, true);
         int cases = fr.nextInt();
         for(int c = 0; c < cases; c++) {
+            int num = fr.nextInt();
+            
+            ArrayList<Integer> evens = new ArrayList<>();
+            ArrayList<Integer> odds = new ArrayList<>();
+            int sum = 0;
+            for(int i = 0; i < num; i++) {
+                int cur = fr.nextInt();
+                if(cur % 2 == 0) {
+                    evens.add(i+1);
+                } else{
+                    odds.add(i+1);
+                }
+                sum += cur;
+            }
+            boolean isprime = isPrime(sum);
+            if(isprime) {
+                out.write((evens.size() + odds.size() - 1) + "\n"); 
+                for(int x : evens) {
+                    out.write(x + " ");
+                }
+                for(int i = 1; i < odds.size(); i++) {
+                    out.write(odds.get(i) + " ");
+                }
+                out.write("\n");
+                
+            } else {
+                out.write((evens.size() + odds.size()) + "\n"); 
+                for(int x : evens) {
+                    out.write(x + " ");
+                }
+                for(int i = 0; i < odds.size(); i++) {
+                    out.write(odds.get(i) + " ");
+                }
+                out.write("\n");
+            }
             
         }
         out.close();
+    }
+
+    static boolean isPrime(int curnum) {
+        boolean isprime = true;
+        for(int i = 2; i < curnum; i++) {
+            if(curnum % i == 0) {
+                isprime = false;
+                break;
+            }
+        }
+        return isprime;
     }
 
     static class FastReader {

@@ -4,7 +4,7 @@ import java.io.InputStreamReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.*;
-public class template {
+public class B {
 
 
    
@@ -14,7 +14,15 @@ public class template {
         PrintWriter out = new PrintWriter(System.out, true);
         int cases = fr.nextInt();
         for(int c = 0; c < cases; c++) {
-            
+            int a = fr.nextInt();
+            int b = fr.nextInt();
+            int d = fr.nextInt();
+            int m = fr.nextInt();
+            if((a >= m+1 && Math.abs(b-d) <= 1) || (b >= m+1 && Math.abs(a-d) <= 1)|| (d >= m+1 && Math.abs(a-b) <= 1)) {
+                out.write("YES\n");
+            } else {
+                out.write("NO\n");
+            }
         }
         out.close();
     }

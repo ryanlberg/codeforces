@@ -4,19 +4,39 @@ import java.io.InputStreamReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.*;
-public class template {
+public class A {
 
 
-   
+    static ArrayList<String> brackets;
 
     public static void main(String[] args) {
         FastReader fr = new FastReader();
         PrintWriter out = new PrintWriter(System.out, true);
         int cases = fr.nextInt();
         for(int c = 0; c < cases; c++) {
-            
+            int bracks = fr.nextInt();
+            brackets = new ArrayList<>();
+            loadBrackets(bracks, bracks, 0, "");
+            for(String brack : brackets) {
+                out.write(brack + "\n");
+            }
         }
         out.close();
+    }
+
+    static void loadBrackets(int total, int breakp, int starting, String current) {
+        if(brackets.size() < breakp) {
+        //System.out.println(current);
+            if(total == 0 && starting == 0) {
+                brackets.add(current);
+            }
+            if(starting > 0) {
+                loadBrackets(total, breakp, starting-1, current + ")");
+            } 
+            if(total > 0) {
+                loadBrackets(total-1, breakp, starting+1, current + "(");
+            }
+        }
     }
 
     static class FastReader {

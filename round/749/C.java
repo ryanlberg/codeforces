@@ -12,9 +12,35 @@ public class C {
     public static void main(String[] args) {
         FastReader fr = new FastReader();
         PrintWriter out = new PrintWriter(System.out, true);
-        int cases = fr.nextInt();
-        for(int c = 0; c < cases; c++) {
-            
+        int rows = fr.nextInt();
+        int cols = fr.nextInt();
+        char[][] board = new char[rows][cols];
+        for(int i = 0 ; i < rows; i++) {
+            board[i] = fr.next().toCharArray();
+        }
+        int[] checker = new int[cols];
+        for(int i = 1; i < rows; i++) {
+            for(int j = 1; j < cols; j++) {
+                if(board[i-1][j] == 'X' && board[i][j-1] == 'X') {
+                    checker[j]++;
+                }
+            }
+        }
+
+        int[] outputs = new int[cols+1];
+        for(int i = 1; i < outputs.length; i++) {
+            outputs[i] = outputs[i-1] + checker[i-1];
+        }
+
+        int queries = fr.nextInt();
+        for(int i = 0; i < queries; i++) {
+            int l = fr.nextInt();
+            int r = fr.nextInt();
+            if(outputs[r] - outputs[l] == 0) {
+                out.write("YES\n");
+            } else {
+                out.write("NO\n");
+            }
         }
         out.close();
     }

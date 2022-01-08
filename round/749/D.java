@@ -12,11 +12,36 @@ public class D {
     public static void main(String[] args) {
         FastReader fr = new FastReader();
         PrintWriter out = new PrintWriter(System.out, true);
-        int cases = fr.nextInt();
-        for(int c = 0; c < cases; c++) {
-            
+        
+       
+        int nums = fr.nextInt();
+        int[] ret = new int[nums];
+        int[] q = new int[nums];
+        Arrays.fill(q, 1);
+        for(int i = 0; i < nums; i++) {
+            int cur = makeQuery(q, fr);
+            ret[cur] = i+1;
+            q[cur] = nums;
         }
+
+        out.write("! ");
+        for(int x : ret) {
+            out.write(x + " ");
+        }
+        out.write("\n");
         out.close();
+    }
+
+    static int makeQuery(int[] q, FastReader fr) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("? ");
+        for(int x : q) {
+            sb.append(Integer.toString(x) + " ");
+        }
+        sb.append("\n");
+        System.out.println(sb.toString());
+        
+        return fr.nextInt();
     }
 
     static class FastReader {

@@ -41,70 +41,82 @@ private fun Int.modPositive(other: Int): Int = if (this % other < 0) ((this % ot
 
 
 
+var cando = true
+var mapper = mutableMapOf<Pair<Int, Int>, Int>()
+var seen = mutableSetOf<Int>()
 
 fun main(args: Array<String>) {
     var cases = readInt()
 
     repeat(cases) {
-        var vertices = readInt()
-        var pairs = arrayListOf<IntArray>()
-        var g = mutableMapOf<Int, MutableSet<Int>>()
-        repeat(vertices-1) {
+        cando = true
+        mapper = mutableMapOf<Pair<Int, Int>, Int>()
+        seen = mutableSetOf<Int>()
+        var edgeOrder = arrayListOf<Pair<Int, Int>>()
+
+        var graph = mutableMapOf<Int, ArrayList<Int>>()
+        var nodes = readInt()
+        repeat(nodes-1) {
             var from = readInt()
             var to = readInt()
-            pairs.add(intArrayOf(from,  to))
-            if(!g.containsKey(from)) {
-                g[from] = mutableSetOf<Int>()
+            edgeOrder.add(Pair(from, to))
+            if(!graph.containsKey(from)) {
+                graph[from] = ArrayList<Int>()
             }
-            if(!g.containsKey(to)) {
-                g[to] = mutableSetOf<Int>()
+            if(!graph.containsKey(to)) {
+                graph[to] = ArrayList<Int>()
             }
-            g[from]!!.add(to)
-            g[to]!!.add(from)
+            graph[from]!!.add(to)
+            graph[to]!!.add(from)
         }
-
-
-        if(vertices > 4) {
+        dfs(1, -1, graph)
+        if(!cando) {
             println(-1)
-        } else if(vertices == 2) {
-            println(2)
-        } else if(vertices == 3) {
-            println(2.toString() + " " + 3.toString())
+
         } else {
-            var twoset = mutableSetOf<Int>()
-            var cando = true
-            for(v in g) {
-                if(g[v.key]!!.size > 2) {
-                    cando = false
-                    break;
-
-                }
+            var outlist = arrayListOf<Int>()
+            for (pair in edgeOrder) {
+                outlist.add(mapper[pair]!!)
             }
-            if(cando) {
-
-                for(v in g) {
-                    if(g[v.key]!!.size == 2) {
-                        twoset.add(v.key)
-                    }
-                }
-                var twolist = twoset.toList()
-                for(pair in pairs) {
-                    if(twoset.contains(pair[0]) && twoset.contains(pair[1])) {
-                        print(2)
-                        print(" ")
-                    } else if(twolist[0] == pair[0] || twolist[0] == pair[1]){
-                        print(5)
-                        print(" ")
-                    } else {
-                        print(11)
-                        print(" ")
-                    }
-                }
-                println()
-
-            }
-
+            println(outlist.joinToString(" "))
         }
     }
 }
 
+fun dfs(value: Int, prime: Int, g: Map<Int, ArrayList<Int>> ) {
+    if(!seen.contains(value) && cando) {
+        seen.add(value)
+        var neighbors = g[value]!!
+        if(neighbors.size > 2) {
+            cando = false
+            return
+        }
+        if(prime == -1) {
+            if(neighbors.size == 2) {
+                mapper[Pair(value, neighbors[0])] = 2
+                mapper[Pair(neighbors[0], value)] = 2
+                mapper[Pair(value, neighbors[1])] = 3
+                mapper[Pair(neighbors[1], value)] = 3
+                dfs(neighbors[0], 3, g)
+                dfs(neighbors[1], 2, g)
+            } else {
+                mapper[Pair(value, neighbors[0])] = 2
+                mapper[Pair(neighbors[0], value)] = 2
+                dfs(neighbors[0], 3, g)
+            }
+        } else {
+            for (node in neighbors) {
+                if (!seen.contains(node)) {
+                    mapper[Pair(value, node)] = prime
+                    mapper[Pair(node, value)] = prime
+                    if(prime == 2) {
+                        dfs(node, 3, g)
+                    } else {
+                        dfs(node, 2, g)
+                    }
+                }
+            }
+        }
+    }
+    return
+}

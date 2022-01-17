@@ -1,5 +1,4 @@
-class C {
-}import java.io.PrintWriter
+import java.io.PrintWriter
 import java.util.StringTokenizer
 import kotlin.math.*
 import kotlin.random.*
@@ -39,30 +38,46 @@ private fun readDoubleArray(n: Int = 0) =
 
 private fun Int.modPositive(other: Int): Int = if (this % other < 0) ((this % other) + other) else (this % other)
 
-var dists = IntArray(1)
-var speed = IntArray(1)
-var mapper = Array(501) {IntArray(500) {Int.MAX_VALUE} }
+var dists = mutableListOf<Int>()
+var speed = mutableListOf<Int>()
+var mapper = mutableMapOf<Pair<Int, Int>, Int>()
 
-fun fillMap(i : Int, end: Int, k : Int, total: Int, l: Int) : Int {
-    if(end == dists.size-1) {
-        return total + (l - dists[i]) * speed[i]
-    } else if(mapper[i][k] != Integer.MAX_VALUE) {
-        return mapper[i][k]
+fun fillMap(i: Int, k : Int, last: Int) : Int{
+    if(i > dists.size-1) {
+        return 100_000_000
+    }else if(i == dists.size-1) {
+        return (dists[i] - dists[last]) * speed[last]
+    } else if(mapper.containsKey(Pair(i, k))) {
+        return mapper[Pair(i, k)]!!
     } else {
-        if(k <= 0) {
-            mapper[i][k] = min(mapper[i][k], fillMap(i+1, end+1, k, (dists[i+1] - dists[i]) * speed[i], l))
+        if(i == 0) {
+            mapper[Pair(i, k)] = min(fillMap(i+1, k, last), fillMap(i+2, k-1, last))
+        }else if(k > 0) {
+            mapper[Pair(i, k)] = min((dists[i] - dists[last]) * speed[last] + fillMap(i+1, k, i),
+                fillMap(i+1, k-1, last))
         } else {
-            for(i in 1..min())
+            mapper[Pair(i, k)] = fillMap(i+1, k, i) + (dists[i] - dists[last]) * speed[last]
         }
+        return mapper[Pair(i, k)]!!
     }
+
 }
 
 fun main(args: Array<String>) {
     var n = readInt()
     var l = readInt()
     var k = readInt()
-    dists = readIntArray(n)
-    speed = readIntArray(n)
-    println(mapper[0][0])
+    for(i in 0 until n) {
+        dists.add(readInt())
+    }
+    dists.add(l)
+
+    for(i in 0 until n) {
+        speed.add(readInt())
+    }
+
+    speed.add(-1)
+
+    println(fillMap(0, k, 0))
 
 }

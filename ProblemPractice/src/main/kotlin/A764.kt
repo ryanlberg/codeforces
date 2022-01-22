@@ -38,51 +38,15 @@ private fun readDoubleArray(n: Int = 0) =
 
 private fun Int.modPositive(other: Int): Int = if (this % other < 0) ((this % other) + other) else (this % other)
 
-var dists = mutableListOf<Int>()
-var speed = mutableListOf<Int>()
-var mapper = mutableMapOf<Pair<Int, Int>, Int>()
 
-fun fillMap(i: Int, k : Int, last: Int) : Int{
-    if(i > dists.size-1) {
-        return 100_000_000
-    }else if(i == dists.size-1) {
-        return (dists[i] - dists[last]) * speed[last]
-    } else if(mapper.containsKey(Pair(i, k))) {
-        println("here: ${i} ${k}")
-        return mapper[Pair(i, k)]!!
-    } else {
-        if(i == 0) {
-            mapper[Pair(i, k)] = fillMap(i+1, k, last)
-        }else if(k > 0) {
-            mapper[Pair(i, k)] =   min(((dists[i] - dists[last]) * speed[last]) + fillMap(i+1, k, i),
-                fillMap(i+1, k-1, last))
-        } else {
-            mapper[Pair(i, k)] =  fillMap(i+1, k, i)
-        }
-        return mapper[Pair(i, k)]!!
-    }
-
-}
 
 fun main(args: Array<String>) {
-    var n = readInt()
-    var l = readInt()
-    var k = readInt()
-    for(i in 0 until n) {
-        dists.add(readInt())
+    var cases = readInt()
+    repeat(cases) {
+        var size = readInt()
+        var nums = readIntArray()
+
+
+        println("${nums!!.maxOf{it} - nums!!.minOf{it}}")
     }
-    dists.add(l)
-    println(dists)
-
-    for(i in 0 until n) {
-        speed.add(readInt())
-    }
-
-    speed.add(-1)
-    fillMap(0, k+1, 0)
-    for(k in mapper) {
-        println("${k.key}: ${mapper[k.key]}")
-    }
-
-
 }

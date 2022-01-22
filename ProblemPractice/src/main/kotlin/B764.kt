@@ -38,51 +38,32 @@ private fun readDoubleArray(n: Int = 0) =
 
 private fun Int.modPositive(other: Int): Int = if (this % other < 0) ((this % other) + other) else (this % other)
 
-var dists = mutableListOf<Int>()
-var speed = mutableListOf<Int>()
-var mapper = mutableMapOf<Pair<Int, Int>, Int>()
 
-fun fillMap(i: Int, k : Int, last: Int) : Int{
-    if(i > dists.size-1) {
-        return 100_000_000
-    }else if(i == dists.size-1) {
-        return (dists[i] - dists[last]) * speed[last]
-    } else if(mapper.containsKey(Pair(i, k))) {
-        println("here: ${i} ${k}")
-        return mapper[Pair(i, k)]!!
-    } else {
-        if(i == 0) {
-            mapper[Pair(i, k)] = fillMap(i+1, k, last)
-        }else if(k > 0) {
-            mapper[Pair(i, k)] =   min(((dists[i] - dists[last]) * speed[last]) + fillMap(i+1, k, i),
-                fillMap(i+1, k-1, last))
-        } else {
-            mapper[Pair(i, k)] =  fillMap(i+1, k, i)
-        }
-        return mapper[Pair(i, k)]!!
-    }
-
-}
 
 fun main(args: Array<String>) {
-    var n = readInt()
-    var l = readInt()
-    var k = readInt()
-    for(i in 0 until n) {
-        dists.add(readInt())
-    }
-    dists.add(l)
-    println(dists)
+    var cases = readInt()
+    repeat(cases) {
+        var a = readInt()
+        var b = readInt()
+        var c = readInt()
+        var cando = false
 
-    for(i in 0 until n) {
-        speed.add(readInt())
-    }
+        var bcDif = b - c
+        var acDif = a - c
+        var abDif = a - b
+        if(canMakeNum(a, b + bcDif) || canMakeNum(b, c + acDif/2) || canMakeNum(c, b + abDif)) {
+            cando = true
+        }
 
-    speed.add(-1)
-    fillMap(0, k+1, 0)
-    for(k in mapper) {
-        println("${k.key}: ${mapper[k.key]}")
-    }
 
+        if(cando) {
+           println("YES")
+        } else {
+            println("NO")
+        }
+    }
+}
+
+fun canMakeNum(a : Int, b : Int) : Boolean {
 
 }

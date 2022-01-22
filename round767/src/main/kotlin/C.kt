@@ -38,51 +38,63 @@ private fun readDoubleArray(n: Int = 0) =
 
 private fun Int.modPositive(other: Int): Int = if (this % other < 0) ((this % other) + other) else (this % other)
 
-var dists = mutableListOf<Int>()
-var speed = mutableListOf<Int>()
-var mapper = mutableMapOf<Pair<Int, Int>, Int>()
 
-fun fillMap(i: Int, k : Int, last: Int) : Int{
-    if(i > dists.size-1) {
-        return 100_000_000
-    }else if(i == dists.size-1) {
-        return (dists[i] - dists[last]) * speed[last]
-    } else if(mapper.containsKey(Pair(i, k))) {
-        println("here: ${i} ${k}")
-        return mapper[Pair(i, k)]!!
-    } else {
-        if(i == 0) {
-            mapper[Pair(i, k)] = fillMap(i+1, k, last)
-        }else if(k > 0) {
-            mapper[Pair(i, k)] =   min(((dists[i] - dists[last]) * speed[last]) + fillMap(i+1, k, i),
-                fillMap(i+1, k-1, last))
-        } else {
-            mapper[Pair(i, k)] =  fillMap(i+1, k, i)
-        }
-        return mapper[Pair(i, k)]!!
-    }
-
-}
 
 fun main(args: Array<String>) {
-    var n = readInt()
-    var l = readInt()
-    var k = readInt()
-    for(i in 0 until n) {
-        dists.add(readInt())
+    var cases = readInt()
+    for(x in 0..cases-1){
+        var nums = readInt()
+        var numsleft = ArrayDeque<Int>()
+        for(i in 0..nums-1) {
+            numsleft.add(readInt())
+        }
+
+        var maxmex = 0
+        var curnums = mutableSetOf<Int>()
+        var curneeded = 0
+        var out = ArrayList<Int>()
+        var curmexloc = 0
+        while(numsleft.size > 0) {
+            curnums = mutableSetOf<Int>()
+            curneeded = 0
+            maxmex = 0
+            curmexloc = 0
+            for(i in 0..numsleft.size-1) {
+                if(numsleft.get(i) >= curneeded) {
+                    curnums.add(numsleft.get(i))
+                }
+
+                if(numsleft.get(i) == curneeded) {
+                    maxmex = getMex(curnums, curneeded)
+                    for(j in curneeded..maxmex-1) {
+                        curnums.remove(j)
+                    }
+                    curneeded = maxmex
+                    curmexloc = i
+
+                }
+            }
+
+            out.add(maxmex)
+            for(i in 0..curmexloc) {
+                numsleft.removeFirst()
+            }
+
+        }
+
+        println(out.size)
+        println(out.joinToString(" "))
+
+
+
     }
-    dists.add(l)
-    println(dists)
+}
 
-    for(i in 0 until n) {
-        speed.add(readInt())
+fun getMex(nums : Set<Int>, start : Int) : Int {
+    for(i in start .. start + nums.size) {
+        if(!nums.contains(i)) {
+            return i;
+        }
     }
-
-    speed.add(-1)
-    fillMap(0, k+1, 0)
-    for(k in mapper) {
-        println("${k.key}: ${mapper[k.key]}")
-    }
-
-
+    return nums.size
 }

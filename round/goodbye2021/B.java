@@ -26,7 +26,7 @@ public class B {
                     ret.append(cur[i]);
                 } 
                 if(cur[i] == cur[i-1]) {
-                    if()
+
                 }
                 else {
                     break;

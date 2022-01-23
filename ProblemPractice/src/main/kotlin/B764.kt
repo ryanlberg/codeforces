@@ -46,17 +46,31 @@ fun main(args: Array<String>) {
         var a = readInt()
         var b = readInt()
         var c = readInt()
-        var cando = false
 
-        var bcDif = b - c
-        var acDif = a - c
-        var abDif = a - b
-        if(canMakeNum(a, b + bcDif) || canMakeNum(b, c + acDif/2) || canMakeNum(c, b + abDif)) {
-            cando = true
+
+        var bcKeep = -1
+        var abKeep = -1
+        var acKeep = -1
+
+        bcKeep = if(c > b) {
+            b - (c - b)
+        } else {
+            b + (b - c)
         }
 
+        abKeep = if(a > b) {
+            b - (a - b)
+        } else {
+            b + ( b - a)
+        }
 
-        if(cando) {
+        acKeep = if((a + c) % 2 == 0) {
+            (a+c)/2
+        } else {
+            -1
+        }
+
+        if(canMakeNum(a, bcKeep) || canMakeNum(b, acKeep)|| canMakeNum(c, abKeep)) {
            println("YES")
         } else {
             println("NO")
@@ -66,4 +80,8 @@ fun main(args: Array<String>) {
 
 fun canMakeNum(a : Int, b : Int) : Boolean {
 
+    if(b < a || b % a != 0) {
+        return false
+    }
+    return true
 }

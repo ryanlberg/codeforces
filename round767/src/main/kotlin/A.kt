@@ -9,12 +9,12 @@ private val OUTPUT = System.out
 
 private val bufferedReader = INPUT.bufferedReader()
 private val outputWriter = PrintWriter(OUTPUT, false)
-private  fun readLn() = bufferedReader.readLine()!!
+private fun readLn() = bufferedReader.readLine()!!
 
 private fun readList() = readLn().split(' ')
 private var tokenizer = StringTokenizer("")
 private fun read(): String {
-    while(tokenizer.hasMoreTokens().not()) tokenizer = StringTokenizer(readLn(), " ")
+    while (tokenizer.hasMoreTokens().not()) tokenizer = StringTokenizer(readLn(), " ")
     return tokenizer.nextToken()
 }
 
@@ -39,23 +39,22 @@ private fun readDoubleArray(n: Int = 0) =
 private fun Int.modPositive(other: Int): Int = if (this % other < 0) ((this % other) + other) else (this % other)
 
 
-
 fun main(args: Array<String>) {
     var cases = readInt()
     repeat(cases) {
         var nums = readInt()
         var curram = readInt()
         val arr = Array(nums) { IntArray(2) }
-        for(i in 0 .. nums-1) {
+        for (i in 0..nums - 1) {
             arr[i][0] = readInt()
         }
-        for(i in 0 .. nums-1) {
+        for (i in 0..nums - 1) {
             arr[i][1] = readInt()
         }
 
         arr.sortBy { it[0] }
-        for(i in arr) {
-            if(i[0] <= curram) {
+        for (i in arr) {
+            if (i[0] <= curram) {
                 curram += i[1]
             }
         }

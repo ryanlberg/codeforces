@@ -43,58 +43,62 @@ private fun Int.modPositive(other: Int): Int = if (this % other < 0) ((this % ot
 fun main(args: Array<String>) {
     var cases = readInt()
     for(x in 0..cases-1){
-        var nums = readInt()
-        var numsleft = ArrayDeque<Int>()
-        for(i in 0..nums-1) {
-            numsleft.add(readInt())
-        }
-
-        var maxmex = 0
-        var curnums = mutableSetOf<Int>()
-        var curneeded = 0
+        var s = readInt()
+        var nums = ArrayDeque<Int>()
+        var mexprefs = ArrayDeque<Int>()
         var out = ArrayList<Int>()
-        var curmexloc = 0
-        while(numsleft.size > 0) {
-            curnums = mutableSetOf<Int>()
-            curneeded = 0
-            maxmex = 0
-            curmexloc = 0
-            for(i in 0..numsleft.size-1) {
-                if(numsleft.get(i) >= curneeded) {
-                    curnums.add(numsleft.get(i))
-                }
-
-                if(numsleft.get(i) == curneeded) {
-                    maxmex = getMex(curnums, curneeded)
-                    for(j in curneeded..maxmex-1) {
-                        curnums.remove(j)
-                    }
-                    curneeded = maxmex
-                    curmexloc = i
-
-                }
-            }
-
-            out.add(maxmex)
-            for(i in 0..curmexloc) {
-                numsleft.removeFirst()
-            }
-
+        for(i in 0 until s) {
+            nums.add(readInt())
         }
 
+        //mex prefixes
+        var numseen = mutableSetOf<Int>()
+        var start = 0
+        for(i in s-1 downTo 0 ) {
+            if(nums[i] == start) {
+                numseen.add(nums[i])
+                var nextmex = getMex(numseen, start)
+                mexprefs.addFirst(nextmex)
+                for(j in start..nextmex) {
+                    numseen.remove(j)
+                }
+                start = nextmex
+
+            } else if(nums[i] > start) {
+                numseen.add(nums[i])
+                mexprefs.addFirst(start)
+            } else {
+                mexprefs.addFirst(start)
+            }
+        }
+
+
+        numseen = mutableSetOf<Int>()
+        var needed = -1
+        for(i in 0 until nums.size) {
+            if(needed == -1) {
+                needed = mexprefs[i]
+            }
+            if(nums[i] < needed) {
+                numseen.add(nums[i])
+            }
+            if(numseen.size == needed) {
+                out.add(needed)
+                numseen = mutableSetOf<Int>()
+                needed = -1
+            }
+        }
         println(out.size)
         println(out.joinToString(" "))
-
-
 
     }
 }
 
 fun getMex(nums : Set<Int>, start : Int) : Int {
-    for(i in start .. start + nums.size) {
+    for(i in start until start + nums.size+1) {
         if(!nums.contains(i)) {
             return i;
         }
     }
-    return nums.size
+    return start + nums.size
 }

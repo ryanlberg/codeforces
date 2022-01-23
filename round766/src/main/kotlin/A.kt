@@ -40,7 +40,7 @@ private fun Int.modPositive(other: Int): Int = if (this % other < 0) ((this % ot
 
 
 
-fun main(args: Array<String>) {
+fun main() {
     val cases = readInt()
     repeat(cases) {
         var n = readInt()

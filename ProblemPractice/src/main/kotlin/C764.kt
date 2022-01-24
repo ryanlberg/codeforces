@@ -39,7 +39,40 @@ private fun readDoubleArray(n: Int = 0) =
 private fun Int.modPositive(other: Int): Int = if (this % other < 0) ((this % other) + other) else (this % other)
 
 
-
 fun main(args: Array<String>) {
+    var cases = readInt()
+    repeat(cases) {
+        var seen = mutableSetOf<Int>()
+        var size = readInt()
+        var nums = readIntList()
 
+        nums = nums.sorted()
+        var cando = true
+        for(num in nums) {
+            var cantake = false
+            var tempnum = num
+            while(tempnum > size) {
+                tempnum /= 2
+            }
+
+            while((tempnum >= 1 && tempnum <= size) && seen.contains(tempnum)) {
+                tempnum /= 2
+            }
+
+            if(tempnum == 0) {
+                cando = false
+                break
+            } else {
+                seen.add(tempnum)
+            }
+        }
+        if(cando) {
+            println("YES")
+        } else {
+            println("NO")
+        }
+
+
+    }
 }
+
